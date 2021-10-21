@@ -16,3 +16,6 @@ See if I can summarize.
 - Filling in change info (left pane of GitHub Desktop) followed by "Commit to master" (button push) pushes the changes into the local repo
 (so file is visible to local editors AND part of the local repo... )
 - When we do a "commit" to local, the results show in the History tab and the "Changes" tab shows empty (ie, all the changes are now committed)
+
+
+After Pull request to merge branch_1 into master... not clear how to add participants to the list of those who can comment on the merge..??
