@@ -49,6 +49,8 @@ commit the merge to the master
 AHA... in the GitHub Desktop tool, clicking on the branch chooser dialog, selecting master gives option at bottom to select branch (from the list) that you want to merge into master...
 
 
+Just found a way to merge from the github desktop tool
+
 
 
 
