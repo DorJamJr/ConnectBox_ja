@@ -19,3 +19,7 @@ See if I can summarize.
 
 
 After Pull request to merge branch_1 into master... not clear how to add participants to the list of those who can comment on the merge..??
+ANSWER... "In the pull requests tab on your github repo, click on the request you would like to merge"
+If there are no conflicts, you will get a button to do the merge
+If there ARE conflicts, you will get a "resolve conflicts" button...
+
