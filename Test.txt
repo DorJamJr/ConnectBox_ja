@@ -55,6 +55,8 @@ It is fast, but seems to not set up for review by others
 
 added in branch_1
 
+Actually, it is a "Merge Commit" request in the desktop tool
+
 
 
 
