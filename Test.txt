@@ -13,3 +13,6 @@ Next, I'll use the "Publish Branch" button (top line of the github desktop) to p
 See if I can summarize.
 - a local repo is created when we do an initial pull (?) (essentially a git clone action)
 - an ansible edit/save of a file in the local repo leaves the file visible to other editors, but not saved in the local git repo (ie, file saved but not part of the repo yet)
+- Filling in change info (left pane of GitHub Desktop) followed by "Commit to master" (button push) pushes the changes into the local repo
+(so file is visible to local editors AND part of the local repo... )
+- When we do a "commit" to local, the results show in the History tab and the "Changes" tab shows empty (ie, all the changes are now committed)
