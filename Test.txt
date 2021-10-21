@@ -43,6 +43,11 @@ If there ARE conflicts, you will get a "resolve conflicts" button...
 When you click that button, you will see the diffs between the conflicting file and can then do
 an edit on screen at github.com .... then click the "Mark as Resolved" button... then click the 
 "Commit Merge" button (upper left)
+There will follow two more button presses (optional comment) to
+commit the merge to the master
+
+AHA... in the GitHub Desktop tool, clicking on the branch chooser dialog, selecting master gives option at bottom to select branch (from the list) that you want to merge into master...
+
 
 
 
