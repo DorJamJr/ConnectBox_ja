@@ -29,4 +29,6 @@ So I added a file (File_2.txt) in branch_1... and did a commit...
 
 I now have an option for a Pull request (I think the option is available because branch_1 is published on github.com)
 SO a "Pull request" is the vehicle to start the process of combining MY branch (branch_1) with the master branch. Doing a Pull request (I think) will let me specify collaborators with whom I share my proposed changes, ask for comments, and ultimately let me roll branch_1 into master.
+Note that a Pull request is a pull from github.com (not my local repo) so before a Pull request I need to push MY repo up to github.com
+
 
