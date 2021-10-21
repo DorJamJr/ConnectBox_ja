@@ -1,3 +1,6 @@
+This line added in Branch_1 version of the code
+
+
 New text file to play with
 
 This will be the base code committed to the master branch...
@@ -18,8 +21,31 @@ See if I can summarize.
 - When we do a "commit" to local, the results show in the History tab and the "Changes" tab shows empty (ie, all the changes are now committed)
 
 
+
+A change made in a branch (ie, saved but not committed) will be "stashed" so it can be retrieved later
+A change made in a branch, saved and also committed will become part of the repo
+
+So then I can publish this branch to github...
+
+So I added a file (File_2.txt) in branch_1... and did a commit...
+
+I now have an option for a Pull request (I think the option is available because branch_1 is published on github.com)
+SO a "Pull request" is the vehicle to start the process of combining MY branch (branch_1) with the master branch. Doing a Pull request (I think) will let me specify collaborators with whom I share my proposed changes, ask for comments, and ultimately let me roll branch_1 into master.
+Note that a Pull request is a pull from github.com (not my local repo) so before a Pull request I need to push MY repo up to github.com
+
+---->>> I ADDED THIS IN THE RESOLVE CONFLICTS DIALOG ON GITHUB ---- 
+
 After Pull request to merge branch_1 into master... not clear how to add participants to the list of those who can comment on the merge..??
 ANSWER... "In the pull requests tab on your github repo, click on the request you would like to merge"
 If there are no conflicts, you will get a button to do the merge
 If there ARE conflicts, you will get a "resolve conflicts" button...
+
+When you click that button, you will see the diffs between the conflicting file and can then do
+an edit on screen at github.com .... then click the "Mark as Resolved" button... then click the 
+"Commit Merge" button (upper left)
+
+
+
+
+
 
