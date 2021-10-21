@@ -2,3 +2,14 @@ New text file to play with
 
 This will be the base code committed to the master branch...
 
+This code shows up in my local github desktop, but not in the master right now...
+Next, I'll use the "Publish Branch" button (top line of the github desktop) to push this branch to github... where it becomes the "master" branch.
+(Note that I've saved it locally, so the edits show up when I choose the "Changes" tab in the left pane of GitHub Desktop )
+(Note also that the various previous saves show up in the History tab)
+"History" shows previous committs to local git rep
+"Changes" shows deltas for current save vs last committ
+   SO I think a committ happens when you write a description and committ locally.
+
+See if I can summarize.
+- a local repo is created when we do an initial pull (?) (essentially a git clone action)
+- an ansible edit/save of a file in the local repo leaves the file visible to other editors, but not saved in the local git repo (ie, file saved but not part of the repo yet)
