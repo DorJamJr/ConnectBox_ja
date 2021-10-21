@@ -22,3 +22,5 @@ See if I can summarize.
 
 A change made in a branch (ie, saved but not committed) will be "stashed" so it can be retrieved later
 A change made in a branch, saved and also committed will become part of the repo
+
+So then I can publish this branch to github...
