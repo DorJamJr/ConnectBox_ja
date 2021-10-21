@@ -44,6 +44,8 @@ When you click that button, you will see the diffs between the conflicting file 
 an edit on screen at github.com .... then click the "Mark as Resolved" button... then click the 
 "Commit Merge" button (upper left)
 
+Just found a way to merge from the github desktop tool
+
 
 
 
