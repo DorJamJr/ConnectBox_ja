@@ -16,4 +16,7 @@ Kirk gave me a failed unit which had been returned to him. This was a CM4 with a
  wasn't working on this one. I found the two wifi coax cables from the 8812 were routed under the ethernet
  connector which wasn't allowing the board to sit properly in the case. I did a re-route on those cables and then reassembled and the wifi worked. (Also removed the hard solder connect of battery - terminals into the board. Cut the termnials to stubs and then used copper foil to make connection from board to battery stubs. Much better.) Using the 121922 code, the wifi was working and then stopped. Hardware looked good and I considered that the 8812 module might have failed, but then tried the latest code change to /etc/network/interfaces file (replace "$FACE" with "wlan1" in 4 places). After reboot, the wifi is working. Going to let it run for a while to see if is reliable.
 
+ The unit (running modified /etc/network/interfaces code) has run about 6 hours now. If it continues to run
+  I will build a new image.
+
  

@@ -1,0 +1,28 @@
+This file contains notes re: build, use, etc of images for RockPi CM3
+
+010523
+Searching for images for the CM3, I came to the conclusion that I would need to build my own. (Search for "Radxa CM3 Getting Started" gave link to Radxa site with description on building a Debian image.) This morning I came across 
+   https://github.com/radxa/debos-radxa/releases/tag/20230101-1010
+which has several images, including:
+   radxa-cm3-io-debian-bullseye-xfce4-arm64-20230101-1153-gpt.img.xz   
+
+It appears that these images are compiles of 1/3/23 for various Radxa products (zero, zero2,
+rock-3a, rock-3b, rock-3c, rock-4c, rock-4c-plus, etc). For the CM3 product there was only the
+debian-bullseye and the ubuntu-focal versions, of which the debian-bullseye is the most interest
+(which I downloaded to the 2021 MBP). Of interest for the rock-4c+ board set, there is:
+   rock-4c-plus-debian-bullseye-xfce4-arm64-20230101-1230-gpt.img.xz
+which I also downloaded.
+
+I burned the radxa-cm3-io-debian-bullseye... image to an 8 GB uSD and installed the uSD and 
+CM3 card into the ROCK IO board. I powered the board with a 12V 1000mA wall wart I had available
+and powered up. It worked. (YEAH!) When I put that same uSD and CM3 into my CM4 HAT and used normal
+power (charger + 2 batteries) it did not boot. Not sure what that is about.
+
+To get ssh running, edit /etc/ssh/sshd_config to add the "PermitRootLogin yes" line then do a 
+'sudo service ssh restart'.
+
+Use the menu pulldown for "Settings" to change the appearance of the terminal. 
+Also in Settings change the screen to 1920x1280 (16:9) to get reasonable screen look.
+
+
+   
