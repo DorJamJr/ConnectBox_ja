@@ -19,4 +19,17 @@ Kirk gave me a failed unit which had been returned to him. This was a CM4 with a
  The unit (running modified /etc/network/interfaces code) has run about 6 hours now. If it continues to run
   I will build a new image.
 
+020823
+USB Stick Mounting
+  Got a query from Phil S via the ConnectBox.help line asking about how to get content to show up on the channel. Not sure if he was not using the correct file structure of if the USB just wasn't mounting. Sent him enough info to handle either case... but in the process, I described the use of the admin tool on the channel to enable media on the USB. Now I'm not sure that step is necessary. In my playing, I found that a USB stick will mount as /media/USB0 if you give it about 30 seconds after plugging in. 
+
+  - lsblk 
+    will show if the system sees the stick
+  - mount /dev/sdb1 /media/USB0
+    will mount the /dev/sdb1 device (stick) as /media/USB0
+  - umount /dev/sdb1
+    will remove the mount point
+
+          
+
  
