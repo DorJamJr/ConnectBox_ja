@@ -31,5 +31,233 @@ USB Stick Mounting
     will remove the mount point
 
           
+030123
+No battery CB showing problems with the admin funtions accessed from client
+  -Logging in from client, the pw is accepted but only briefly flashes to the admin functions screen, then back to the login screen (login is accepted)
+  - Using back button "<" puts us on the admin functions screen but there is a warning message, "Unaable to Retrieve From Database: Unauthorized"
+  - Admin function to show user count shows only blank
+  - Admin function to list available local wifi just spins
+  - Conditions:
+    - we are using the most recent HAT from the Kirk production (4 board panel) having the notch for the internal wifi dongle
+    - the dongle I'm using is labled "RT5370" (from Edwin I think)
+    - Code is fresh burn from GitHub repo: 111422
+    - Same code used on my test NEO (upstairs) works fine (different wifi dongle, different HAT)
+
+Testing:
+  - Try the RT5370 in my upstairs NEO with terminal access
+    - RT5370 inserted into external USB port
+    - admin login normal, look for local wifi normal, connects to local AdamsHome7
+    - lsusb show Raink Technology RT5370 in list
+    - Admin function WAP Status correctly shows one unit connected
+    - So it seems to work there...
+  -  Try new HAT unit, RT5370 in extenal USB, (1111222 code from recent burn), using my upstairs NEO with terminal access
+    - Won't power on
+      - Pull neo and power on ok
+      - Use original NEO and power ok
+      - With upstairs NEO ("uNEO") removed, power on, then plug in uNEO... power stays on
+        - then power off and power on, the power will come on (??)
+    - All seems to be normal after boot up
+  - Try same (new HAT, uNEO) with RT5370 on internal USB connector
+    - Still have to play games to get power up with uNEO
+    - After boot, seem normal
+  - Try same with newer uSD (111422 from downstairs)
+    - Back to problems with admin login
+    - Took an extra reboot... just before the login we got an error on loading 8812au:
+    "
+      insmod: ERROR: could not load module /usr/lib/5.15.74-sunxi/kernel/net/wireless/8812au: No such file or directory
+      modprobe: FATAL: Module 8812au not found in directory /lib/modules/5.15.74-sunxi
+      88x2bu module already loaded
+      8852au module already loaded
+    "
+    - checked and /usr/lib does not have folder 5.15.75-sunxi (or anything close)
+    - checked and /lib/modules/5.15.74.sunxi does exist, but no 8812au
+
+  - Trade back to uuSD (upstairs uSD)
+    - All ok... but we do see the same error messages (slightly different order..??) 
+    - While on admin page got a red warning... then tried to change the wifi link to AdamsHome6 and got no error on admin screen, but iwconfig shows wlan0 now gone...
+    - Try again to change wifi to AdamsHome7... admin screen msg "success" but although iwconfig shows wlan0 (unassociated) ifconfig shows no wlan0
+    - ping 10,0.0.11 (imac) not reachable
+    - reboot
+    - still no wlan0
+      - lsusb shows RT5370 connected but ifconfig/iwconfig don't show wlan0
+  - Power down... pull RT5370 and move to external USB port... reboot
+    - now RT5370 not recognized... internal wifi (8812au) assigned to wlan0
+  - Power down... use wifi dongle with antenna on external USB and power up
+    - Dongle is RT5372
+    - login is ok... but 2nd wifi not recognized so 8812au assigned to wlan0 and no ability to connect to hot spot.
+
+  - CONCLUSIONS...
+    - the upstairs uSD (uuSD) has consistent login with admin, the downstairs uSD (duSD) has consitent failure with login (login works, but then flashes back to login screen... admin functions screen shows error)
+    - the uuSD now showing problems with RT5370 and RT5372... both show up in lsusb, but not in ifconfig or iwconfig
+    - Had a boot hang... Wondering if we have a basic problem trying to run the NEO from wall wart only... power stability???
+    - Also had a lockup during useage... power again?
+
+
+
+- Trying older code 20221031 (also Bullseye)... with uNEO
+  - still power problems! stalled on boot
+  - not getting the fail of 8812au driver load (??)
+  - "rc.local 8812au module already loaded" (same message for 88x2bu)
+  - we get the same error as the downstairs uSD (111422)
+  - both wlan0 and wlan1 show up on ifconfig/iwconfig (but can't connect to local wifi because admin page not working)
+
+- Burn fresh copy of 111422 (2021 MBP)
+  -  Same issue as before: Unable to retrieve from database: Unauthorized
+  - Pull off 2nd wifi and try again... 
+  - Same... login seems to succeed but back to login page... admin functions don't work.
+
+Slack messages to Kirk and Derek for help...
+  - Derek repsonded:
+    - try following commands
+      - pm2 status
+      - connectboxmanage
+      - pm2 logs  (shows activity when using admin screen... no activity means pm2 not working)
+
+  - he will call for zoom in 1 hr...
+
+  - Spent about an hour with Derek. He believes the problem has to do with improper handling of an empty .json file. He made some changes to my uSD and we have some success. (Had to do a pm2 restart for the unit to begin to work.... also tried a reboot and it continues to work.) Derek will make changes to the admin code and let me know how to apply the changes to the two units. Also I will try a new NEO build once the changes are checked in.
+
+  - while waiting, I put the recent uSD in the new no battery unit, used the RT5370 internal and rebooted. It seems to work...
+
+  - Derek back... decided no changes necessary.
+  - we tried all 3 uSD chips and all now working 
+    - ssh enable via purple usb... is that a factor?
+    - also have eth cable plugged in
+    - enable admin screens (success but required reboot to show up on OLED)
+    - SSID set to ConnectBox1 - Free Media
+    - power down and try 2nd uSD
+      - insert purple USB, no ethernet, power up
+      - login ok
+      - enable advanced
+      - enable admin screen and change SSID to ConnectBox2 - Free Media
+      - reboot
+      - OK
+
+  - Put uSD "ConnectBox2 ..." in small case, "ConnectBox1 ..." in large case.
+  - Both working with:
+    - media pushed into uSD
+    - no USB attached
+    - no eth attached
+    - internal RT5370
+    - power by 5w bricks (Apple & generic)
+
+  - power both off for 1 hour and power back on
+    - ConnectBox1 came up in 45 seconds, Connectbox2 took about 4 minutes
+    - once up, both seem normal
+
+  - power off and unplug both for overnight
+  - plug in and restart in the morning
+  - Both 1 and 2 seem to be working. Both boot in about 45 seconds, login ok, admin ok
+
+  030223
+  How to make the image NEO_111422 work... what steps to take?
+  - Burn fresh image
+  - Put in development NEO board (serial terminal attached) on 6.0.4 hat... no purple usb, no wifi dongle, no ethernet cable
+  - Power up
+    - boot time about 6:38 after 4 boot cycles
+    - ifconfig, iwconfig show 8812au on wlan0 with SSID = ConnectBox - Free Media   
+    - connect with iphone... redirect ok, initial splash ok
+      - OLED shows 1 connected
+      - on iphone do "Configuration" - jumps to admin screen (not login.. prev credentials stored?.. not a "Private" group of tabs...)
+      - use upper right to logout
+      - at login screen type pw... successful... no error
+        - check "Wireless access point status"... shows 1 device connected
+        - a pink warning screen popped up but then went away (not associated with admin request)
+        - Try Connect To WiFi Hotspot -> Scan For Available Networks (Loading... -> Choose Available -> shows all networks (not sure how... we don't have 2nd wifi hardware... ???) -> choose AdamsHome6 -> perhaps hold overs from prev connection? -> leave the admin page by logout)
+    - Close all non-private pages and go to private browsing on iPhone
+    - Open new private window and type "connectbox - FreeMedia" -- wait about 10 secs and we get the home page
+      - now do Configuration and we get login screen
+      - Interesting! we now get the successful login but jump back to login page
+      - Using "<" takes me to the admin page, shows the familiar error (warning), no communication though (ie, trying a command like Wireless Access Point Status shows a blank for the # of devices connected... Under the Connect To Wi-Fi Hotspot section, Client Wi-Fi Status is showing a blank)
+      - on terminal type "pm2 status" (same as yesterday... online)
+      - on terminal type "pm2 restart" (invalid command format... need to check with Derek)
+
+  Bunny trail... tried private safari window to CB2 and it works
+  
+      - try terminus connection to 10.129.0.1   -> refused (ssh not yet enabled)
+      - systemctl start ssh
+      - terminus connects
+      - try login to admin .... same error (warning) and no funtionality
+      - try "reboot now"
+        - same - admin login gives warning and no functionality
+      - plug in purple USB... view 2 pics... try admin login... still failing
+      - power down... 
+
+  Bunny trail... try the other "working" uSD in devNEO
+      - fails login on "private" browser
+      - push content to usd
+      - plug in external wifi
+      - reboot now
+      - CB ssid on wlan1... ifconfig wlan1 only; iwconfig wlan0 and wlan1
+      - "pm2 restart all"
+      - reboot now
+      - "pm2 logs"
+**    - tried logging on with iphone with cleared history and admin login accepted but fails 
+        same as a   "private" safari page... so verifies that new user would have a problem
+
+  030323
+  - Derek suggested using the Safari Inspector (open Safari, choose Develop from menu bar, choose Show Web Inspector from dropdown list)
+    - He likes tabs Console and Network
+    - Tried connecting to CB SSID then running 10.129.0.1 and did get the graphic but http://gowifi.org gives me error ("Please reconnect to wifi") and shows "Not secure - gowifi.org" in address
+  - Derek did some edit to add connectbox to an ip list on my iMac, but now not working to make CB available
+    (edit of /etc/hosts to add alias to connectbox )  
+
+Video captures saved in dorjamjr/Movies/Wondershare Filmora X/Screen Record
+
+  - was working with the fresh image 111422... plugged in the eth0 connector and had a power short (moving the NEO and power went off)... after it booted (about 4 (+??) reboots) now it works... (admin functions avaiable after login)
+  - try another chip (labled fresh 030223) with eth cable and wifi dongle in place
+  - power up (initial with RT5372 wifi, ethernet connected)
+  - That works... ???
+  - Try removing eth and wifi and reboot...
+    - can't shutdown
+    - holding button down does not shut down
+    - sending shutdown from iphone does not work either... error:
+       /usr/local/connectbox/bin/shutdown.sh not found (correct... it isn't there... ??)
+       - not on CB2 either...
+???       - check of ansible shows it should be there!
+       - CB2 will shutdown with button though
+       - retry CB1
+         - no /usr/local/bin/shutdown
+         - use Pushbutton... does power down... short time for power down logo though (just a flash)
+         - power up again without eth or wifi
+         - admin functions ok
+
+** Power up CB1 and CB2... both still have functioning admin ... both power down by buttons
+     - perhaps some power issues that caused the unexpected power down behavior?
+
+
+** Fresh burn of uSD and power up without eth0 or wifi2   (doing screen record... about 3/3/23 3:50 PM start)
+  - Initial power up has no admin functionality
+  - add ethernet cable - still
+  - "reboot now" ... now we have admin capability...
+  - remove ethernet cable
+  - "reboot now"
+  - still have admin functions
+
+  - try the same experiment with another fresh burn uSD
+  - try using power switch for power down and power up
+  - with ethernet connected, we have admin function
+  - remove connector, power switch down, power switch up, admin function fails...
+  - Try again...
+    - connect ethernet cable
+    - "reboot now"
+    - after boot the admin functions work
+    - pull ethernet cable
+    - "reboot now"
+    - after boot, the admin functions still work
+    - theory: we need the "reboot now" because the power cycle down is too short for needed housekeeping
+
+    
+
+
+
+
+
+
+
+       
+
+
+
 
  
